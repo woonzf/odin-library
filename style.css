@@ -29,12 +29,6 @@ footer {
     justify-content: center;
 }
 
-@media (orientation: portrait) {
-    .content {
-        margin: 3rem;
-    }
-}
-
 .card {
     border: 1px solid var(--color-dark);
     border-left: 0.5rem solid var(--color-dark);
@@ -50,12 +44,84 @@ footer {
     border: 1px dashed var(--color-dark);
 }
 
+dialog {
+    position: fixed;
+    border-radius: 0.5rem;
+    border: none;
+    box-shadow: 0 0 20px var(--color-dark);
+    padding: 1rem;
+    width: 15rem;
+}
+
+::backdrop {
+    background-color: black;
+    opacity: 50%;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+form div {
+    display: flex;
+    justify-content: center;
+    align-items: end;
+    margin: 1rem 0;
+}
+
+div label {
+    margin-left: 0;
+    margin-right: 1rem;
+}
+
+label,
+input,
+#add {
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
+/* input */
+input[type="text"],
+input[type="number"] {
+    border: none;
+    background-color: hsl(0, 0%, 90%);
+    margin-bottom: 1rem;
+    line-height: 1.5rem;
+    border-radius: 0.5rem;
+    text-indent: 0.5rem;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus {
+    outline: none;
+    box-shadow: 0 0 10px var(--color-dark);
+}
+
+#read {
+    margin: 0;
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+#read:checked {
+    accent-color: var(--color-dark);
+}
+
 /* button */
-button {
+.content button,
+#close {
     border: none;
     background-color: transparent;
     padding: 0;
     display: flex;
+}
+
+#addBook:focus,
+#removeBook:focus,
+#close:focus {
+    outline: none;
 }
 
 #removeBook {
@@ -63,6 +129,23 @@ button {
     bottom: 0;
     right: 0;
     margin: 0.5rem;
+}
+
+#close {
+    font-weight: bold;
+    font-size: 1.2rem;
+    align-self: flex-end;
+    margin-bottom: 1rem;
+}
+
+#add {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    border: none;
+    background-color: var(--color-dark);
+    color: white;
+    border-radius: 0.5rem;
+    font-size: 2rem;
 }
 
 /* img */
@@ -84,4 +167,19 @@ footer a {
     display: flex;
     gap: 0.5rem;
     align-items: end;
+}
+
+/* media */
+@media (orientation: portrait) {
+    .content {
+        margin: 3rem;
+    }
+
+    .card:last-of-type {
+        position: fixed;
+        bottom: 5rem;
+        right: 2rem;
+        height: calc(50px + 1rem);
+        width: calc(50px + 1rem);
+    }
 }

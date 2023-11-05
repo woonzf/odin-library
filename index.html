@@ -30,6 +30,22 @@
                 <button id="addBook"><img src="images/book-plus-outline-custom.png" alt="Add a Book"></button>
             </div>
         </div>
+        <dialog>
+            <form>
+                <button id="close" autofocus>X</button>
+                <label for="title">TITLE</label>
+                <input type="text" id="title" name="title" autocomplete="off" required>
+                <label for="author">AUTHOR</label>
+                <input type="text" id="author" name="author" autocomplete="off" required>
+                <label for="pages">PAGES</label>
+                <input type="number" id="pages" name="pages" min="1" step="1" autocomplete="off" required>
+                <div>
+                    <label for="read">HAVE YOU READ IT?</label>
+                    <input type="checkbox" id="read" name="read">
+                </div>
+                <button id="add">+</button>
+            </form>
+        </dialog>
         <footer><a href="https://github.com/woonzf" target="_blank" rel="noopener noreferrer"><img src="images/github-mark-white.png" alt="GitHub Invertocat Logo">ZF</a></footer>
     </body>
 </html>
