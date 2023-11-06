@@ -74,9 +74,7 @@ function Book(title, author, pages, read, id) {
 
 // Generate book ID
 function generateId() {
-    if (library.length === 0) {
-        return 1;
-    }
+    if (library.length === 0) return 1;
 
     let ids = [];
     for (book of library) {
@@ -122,11 +120,15 @@ function addCard(data, div, card) {
     bookPages.classList.add("pages");
     bookPages.textContent = data[2] + " pages";
 
-    const bookRead = document.createElement("div");
+    const bookRead = document.createElement("button");
     bookRead.classList.add("toggleRead");
+    bookRead.setToBool(data[3]);
 
-    if (data[3]) bookRead.textContent = "✓";
-    else bookRead.textContent = "✖";
+    bookRead.addEventListener("click", () => {
+        const index = library.findIndex(book => book.id === data[4]);
+        library[index].read = !library[index].read;
+        bookRead.setToBool(library[index].read);
+    })
 
     const removeBtn = document.createElement("button");
     removeBtn.classList.add("removeBook");
@@ -144,6 +146,21 @@ function addCard(data, div, card) {
 
     newBook.append(bookTitle, bookAuthor, bookPages, bookRead, removeBtn);
     div.insertBefore(newBook, card);
+}
+
+// Create new object prototype to set toggleRead class
+Object.prototype.setToBool = function (bool) {
+    const btnClass = this.classList;
+    if (btnClass.contains("true")) btnClass.remove("true");
+    else if (btnClass.contains("false")) btnClass.remove("false");
+    
+    if (bool) {
+        btnClass.add("true");
+        this.textContent = "✓ Read";
+    } else {
+        btnClass.add("false");
+        this.textContent = "✖ Read";
+    }
 }
 
 // Populate book cards
