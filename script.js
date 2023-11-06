@@ -1,10 +1,19 @@
 // Global variable
 let library = [];
 
+// Pre-populate some books
+const data1 = ["Harry Potter", "JK Rowling", "100", false, generateId()];
+addBookToLibrary(data1);
+const data2 = ["Harry Potter 2", "JK Rowling", "200", true, generateId()];
+addBookToLibrary(data2);
+
 // Run after DOM is loaded
 document.addEventListener("DOMContentLoaded", () => {
     const addBookBtn = document.querySelector("#addBook");
-    const removeBookBtn = document.querySelectorAll(".removeBook");
+    const libraryDiv = document.querySelector(".library");
+    const lastCard = libraryDiv.querySelector("#card-add");
+
+    populateCards(libraryDiv, lastCard);
 
     // Open add a book dialog
     addBookBtn.addEventListener("click", () => {
@@ -17,7 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // Close dialog
         closeDialogBtn.addEventListener("click", (e) => {
             e.preventDefault();
-            clearData();
+            clearInputs();
             addBookDialog.close();
         })
 
@@ -27,65 +36,120 @@ document.addEventListener("DOMContentLoaded", () => {
             const author = addBookDialog.querySelector("#author");
             const pages = addBookDialog.querySelector("#pages");
             const read = addBookDialog.querySelector("#read");
-            
-            const data = [title.value, author.value, +pages.value, read.checked];
+            const id = generateId();
+
+            const data = [title.value, author.value, +pages.value, read.checked, id];
 
             if (!data.includes("") && !+pages.value < 1) {
                 e.preventDefault();
-
-                const libraryDiv = document.querySelector(".library");
-                const lastCard = libraryDiv.querySelector("#card-add");
-                const book = new Book(data[0], data[1], data[2], data[3]);
-                
-                // Create card
-                const newBook = document.createElement("div");
-                newBook.classList.add("card");
-
-                const bookTitle = document.createElement("div");
-                bookTitle.textContent = data[0];
-
-                const removeBtn = document.createElement("button");
-                removeBtn.classList.add("removeBook");
-                
-                const removeBtnImg = document.createElement("img");
-                removeBtnImg.src = "images/book-remove-outline-custom.png";
-                removeBtnImg.alt = "Remove Book";
-
-                removeBtn.appendChild(removeBtnImg);
-                newBook.append(bookTitle, removeBtn);
-                libraryDiv.insertBefore(newBook, lastCard);
-
-                library.push(book);
-                console.log(library)
-                clearData();
+                addBookToLibrary(data);
+                addCard(data, libraryDiv, lastCard);
+                clearInputs();
                 addBookDialog.close();
             }
-        })
-    })
-
-    // Remove book
-    removeBookBtn.forEach(button => {
-        button.addEventListener("click", () => {
-            console.log("remove")
         })
     })
 })
 
 // Functions
-// Clear input values and data
-const clearData = () => {
+// Clear input values
+const clearInputs = () => {
     title.value = "";
     author.value = "";
     pages.value = "";
+    read.checked = false;
 }
 
 // Book constructor
-function Book(title, author, pages, read) {
+function Book(title, author, pages, read, id) {
     this.title = title;
     this.author = author;
     this.pages = pages;
     this.read = read;
+    this.id = id;
     this.info = () => {
         return `${this.title} by ${this.author}, ${this.pages} pages, ${this.read}`;
+    }
+}
+
+// Generate book ID
+function generateId() {
+    if (library.length === 0) {
+        return 1;
+    }
+
+    let ids = [];
+    for (book of library) {
+        ids.push(book.id);
+    }
+
+    return Math.max(...ids) + 1;
+}
+
+// Add book to library
+function addBookToLibrary(data) {
+    const book = new Book(data[0], data[1], data[2], data[3], data[4]);
+    library.push(book);
+}
+
+// Remove book from library
+function removeBookFromLibrary(id) {
+    const index = library.findIndex(book => book.id === id);
+    library.splice(index, 1);
+}
+
+// Add book card
+function addCard(data, div, card) {
+    const newBook = document.createElement("div");
+    newBook.classList.add("card");
+
+    const bookTitle = document.createElement("div");
+    bookTitle.classList.add("title");
+    bookTitle.textContent = data[0];
+
+    const bookAuthor = document.createElement("div");
+    bookAuthor.classList.add("author");
+
+    const author1 = document.createElement("div");
+    author1.textContent = "by";
+
+    const author2 = document.createElement("div");
+    author2.textContent = data[1];
+
+    bookAuthor.append(author1, author2);
+
+    const bookPages = document.createElement("div");
+    bookPages.classList.add("pages");
+    bookPages.textContent = data[2] + " pages";
+
+    const bookRead = document.createElement("div");
+    bookRead.classList.add("toggleRead");
+
+    if (data[3]) bookRead.textContent = "✓";
+    else bookRead.textContent = "✖";
+
+    const removeBtn = document.createElement("button");
+    removeBtn.classList.add("removeBook");
+    
+    const removeBtnImg = document.createElement("img");
+    removeBtnImg.src = "images/book-remove-outline-custom.png";
+    removeBtnImg.alt = "Remove Book";
+
+    removeBtn.appendChild(removeBtnImg);
+
+    removeBtn.addEventListener("click", () => {
+        removeBookFromLibrary(data[4]);
+        div.removeChild(newBook);
+    })
+
+    newBook.append(bookTitle, bookAuthor, bookPages, bookRead, removeBtn);
+    div.insertBefore(newBook, card);
+}
+
+// Populate book cards
+function populateCards(div, card) {
+    for (book of library) {
+        const data = [book.title, book.author, book.pages, book.read, book.id];
+        addCard(data, div, card);
     }
 }
