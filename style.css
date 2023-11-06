@@ -163,10 +163,8 @@ input[type="number"]:focus {
 }
 
 .toggleRead {
-    background-color: var(--color-dark) !important;
-    color: white;
     height: 2rem;
-    width: 3.5rem;
+    width: 5rem;
     border-radius: 0.5rem;
     position: absolute;
     bottom: 0.5rem;
@@ -175,6 +173,15 @@ input[type="number"]:focus {
     display: flex;
     justify-content: center;
     align-items: center;
+    font-size: 1rem;
+}
+
+.toggleRead.true {
+    background-color: hsl(120, 100%, 80%);
+}
+
+.toggleRead.false {
+    background-color: hsl(0, 100%, 80%);
 }
 
 #close {
