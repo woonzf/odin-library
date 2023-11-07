@@ -16,16 +16,26 @@ footer {
     display: flex;
     justify-content: center;
     align-items: center;
+
+    position: fixed;
+    width: 100%;
+}
+
+header {
+    top: 0;
+    z-index: 1;
+}
+
+footer {
+    bottom: 0;
 }
 
 .library {
     box-sizing: border-box;
-    min-height: calc(100vh - 12rem);
-    margin: 3rem 12rem;
+    margin: 6rem 12rem;
     
     display: grid;
     grid-template-columns: repeat(auto-fill, 11rem);
-    grid-template-rows: 1fr 1fr 1fr;
     gap: 1rem;
     justify-content: center;
     align-items: center;
@@ -267,7 +277,7 @@ footer a {
 /* media */
 @media (orientation: portrait) {
     .library {
-        margin: 3rem;
+        margin: 6rem 3rem;
     }
 
     .card:last-of-type {
