@@ -1,5 +1,7 @@
-// Global variable
+// Global variables
 let library = [];
+let idRemove = null;
+let cardRemove = null;
 
 // Pre-populate some books
 const data1 = ["Harry Potter", "JK Rowling", "100", false, generateId()];
@@ -49,6 +51,20 @@ document.addEventListener("DOMContentLoaded", () => {
                 addBookDialog.close();
             }
         })
+    })
+
+    const removeBookDialog = document.querySelector("#dialog-remove");
+    const btnYes = removeBookDialog.querySelector("#yes");
+    const btnNo = removeBookDialog.querySelector("#no");
+
+    btnYes.addEventListener("click", () => {
+        removeBookFromLibrary(idRemove);
+        cardRemove.remove();
+        removeBookDialog.close();
+    })
+
+    btnNo.addEventListener("click", () => {
+        removeBookDialog.close();
     })
 })
 
@@ -143,8 +159,8 @@ function addCard(data, div, card) {
 
     removeBtn.appendChild(removeBtnImg);
 
-    const removeBookDialog = document.querySelector("#dialog-remove");
     removeBtn.addEventListener("click", () => {
+        const removeBookDialog = document.querySelector("#dialog-remove");
         removeBookDialog.showModal();
 
         const detailTitle = removeBookDialog.querySelector("#detail-title");
@@ -153,18 +169,8 @@ function addCard(data, div, card) {
         detailTitle.textContent = `"${data[0]}"`;
         detailAuthor.textContent = `by ${data[1]}`;
 
-        const btnYes = removeBookDialog.querySelector("#yes");
-        const btnNo = removeBookDialog.querySelector("#no");
-
-        btnYes.addEventListener("click", () => {
-            removeBookFromLibrary(data[4]);
-            newBook.remove();
-            removeBookDialog.close();
-        })
-
-        btnNo.addEventListener("click", () => {
-            removeBookDialog.close();
-        })
+        idRemove = data[4];
+        cardRemove = newBook;
     })
 
     // Append all into card div and insert to second-last position
