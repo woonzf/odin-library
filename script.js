@@ -158,7 +158,7 @@ function addCard(data, div, card) {
 
         btnYes.addEventListener("click", () => {
             removeBookFromLibrary(data[4]);
-            div.removeChild(newBook);
+            newBook.remove();
             removeBookDialog.close();
         })
 
