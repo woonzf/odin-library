@@ -14,8 +14,8 @@
                 <button id="addBook"><img src="images/book-plus-outline-custom.png" alt="Add a Book"></button>
             </div>
         </div>
-        <dialog>
-            <form>
+        <dialog id="dialog-add">
+            <form method="dialog">
                 <button id="close" autofocus>X</button>
                 <label for="title">TITLE</label>
                 <input type="text" id="title" name="title" autocomplete="off" required>
@@ -29,6 +29,19 @@
                 </div>
                 <button id="add">+</button>
             </form>
+        </dialog>
+        <dialog id="dialog-remove">
+            <div>
+                <div>ARE YOU SURE YOU WANT TO <i>REMOVE</i> THIS BOOK?</div>
+                <div id="book-detail">
+                    <div id="detail-title"></div>
+                    <div id="detail-author"></div>
+                </div>
+                <div>
+                    <button id="yes">YES</button>
+                    <button id="no">NO</button>
+                </div>
+            </div>
         </dialog>
         <footer><a href="https://github.com/woonzf" target="_blank" rel="noopener noreferrer"><img src="images/github-mark-white.png" alt="GitHub Invertocat Logo">ZF</a></footer>
     </body>

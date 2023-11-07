@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Open add a book dialog
     addBookBtn.addEventListener("click", () => {
-        const addBookDialog = document.querySelector("dialog");
+        const addBookDialog = document.querySelector("#dialog-add");
         const closeDialogBtn = addBookDialog.querySelector("#close");
         const add = addBookDialog.querySelector("#add");
 
@@ -67,9 +67,6 @@ function Book(title, author, pages, read, id) {
     this.pages = pages;
     this.read = read;
     this.id = id;
-    this.info = () => {
-        return `${this.title} by ${this.author}, ${this.pages} pages, ${this.read}`;
-    }
 }
 
 // Generate book ID
@@ -139,9 +136,28 @@ function addCard(data, div, card) {
 
     removeBtn.appendChild(removeBtnImg);
 
+    const removeBookDialog = document.querySelector("#dialog-remove");
     removeBtn.addEventListener("click", () => {
-        removeBookFromLibrary(data[4]);
-        div.removeChild(newBook);
+        removeBookDialog.showModal();
+
+        const detailTitle = removeBookDialog.querySelector("#detail-title");
+        const detailAuthor = removeBookDialog.querySelector("#detail-author");
+
+        detailTitle.textContent = `"${data[0]}"`;
+        detailAuthor.textContent = `by ${data[1]}`;
+
+        const btnYes = removeBookDialog.querySelector("#yes");
+        const btnNo = removeBookDialog.querySelector("#no");
+
+        btnYes.addEventListener("click", () => {
+            removeBookFromLibrary(data[4]);
+            div.removeChild(newBook);
+            removeBookDialog.close();
+        })
+
+        btnNo.addEventListener("click", () => {
+            removeBookDialog.close();
+        })
     })
 
     newBook.append(bookTitle, bookAuthor, bookPages, bookRead, removeBtn);
