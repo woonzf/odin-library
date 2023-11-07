@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     populateCards(libraryDiv, lastCard);
 
-    // Open add a book dialog
+    // Open dialog for adding book
     addBookBtn.addEventListener("click", () => {
         const addBookDialog = document.querySelector("#dialog-add");
         const closeDialogBtn = addBookDialog.querySelector("#close");
@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         addBookDialog.showModal();
 
-        // Close dialog
+        // Close dialog for adding book
         closeDialogBtn.addEventListener("click", (e) => {
             e.preventDefault();
             clearInputs();
@@ -57,12 +57,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const btnYes = removeBookDialog.querySelector("#yes");
     const btnNo = removeBookDialog.querySelector("#no");
 
+    // Remove book and card from library
     btnYes.addEventListener("click", () => {
         removeBookFromLibrary(idRemove);
         cardRemove.remove();
         removeBookDialog.close();
     })
 
+    // Close dialog for removing book
     btnNo.addEventListener("click", () => {
         removeBookDialog.close();
     })
