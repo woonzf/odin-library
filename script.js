@@ -40,6 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const data = [title.value, author.value, +pages.value, read.checked, id];
 
+            // Prevent empty inputs and pages less than 1
             if (!data.includes("") && !+pages.value < 1) {
                 e.preventDefault();
                 addBookToLibrary(data);
@@ -95,13 +96,16 @@ function removeBookFromLibrary(id) {
 
 // Add book card
 function addCard(data, div, card) {
+    // Create card div
     const newBook = document.createElement("div");
     newBook.classList.add("card");
 
+    // Create title div
     const bookTitle = document.createElement("div");
     bookTitle.classList.add("title");
     bookTitle.textContent = data[0];
 
+    // Create author div
     const bookAuthor = document.createElement("div");
     bookAuthor.classList.add("author");
 
@@ -113,10 +117,12 @@ function addCard(data, div, card) {
 
     bookAuthor.append(author1, author2);
 
+    // Create pages div
     const bookPages = document.createElement("div");
     bookPages.classList.add("pages");
     bookPages.textContent = data[2] + " pages";
 
+    // Create read button
     const bookRead = document.createElement("button");
     bookRead.classList.add("toggleRead");
     bookRead.setToBool(data[3]);
@@ -127,6 +133,7 @@ function addCard(data, div, card) {
         bookRead.setToBool(library[index].read);
     })
 
+    // Create remove button
     const removeBtn = document.createElement("button");
     removeBtn.classList.add("removeBook");
     
@@ -160,11 +167,12 @@ function addCard(data, div, card) {
         })
     })
 
+    // Append all into card div and insert to second-last position
     newBook.append(bookTitle, bookAuthor, bookPages, bookRead, removeBtn);
     div.insertBefore(newBook, card);
 }
 
-// Create new object prototype to set toggleRead class
+// Create new object prototype function to toggle Read
 Object.prototype.setToBool = function (bool) {
     const btnClass = this.classList;
     if (btnClass.contains("true")) btnClass.remove("true");
