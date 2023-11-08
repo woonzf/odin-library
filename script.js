@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const data = [title.value, author.value, +pages.value, read.checked, id];
 
             // Prevent empty inputs and pages less than 1
-            if (!data.includes("") && parseInt(pages.value) > 0) {
+            if (!data.includes("") && data[2] > 0 && (data[2]%1 === 0)) {
                 e.preventDefault();
                 addBookToLibrary(data);
                 addCard(data, libraryDiv, lastCard);
