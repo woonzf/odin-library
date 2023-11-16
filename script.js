@@ -1,3 +1,14 @@
+// Book class
+class Book {
+    constructor(title, author, pages, read, id) {
+        this.title = title;
+        this.author = author;
+        this.pages = pages;
+        this.read = read;
+        this.id = id;
+    }
+}
+
 // Global variables
 let library = [];
 let idRemove = null;
@@ -77,15 +88,6 @@ const clearInputs = () => {
     author.value = "";
     pages.value = "";
     read.checked = false;
-}
-
-// Book constructor
-function Book(title, author, pages, read, id) {
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
-    this.read = read;
-    this.id = id;
 }
 
 // Generate book ID
