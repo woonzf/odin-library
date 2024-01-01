@@ -43,19 +43,23 @@ document.addEventListener("DOMContentLoaded", () => {
             addBookDialog.close();
         })
 
+        // Form validation
+        const pages = addBookDialog.querySelector("#pages");
+        pages.addEventListener("input", () => {
+            if (pages.validity.rangeOverflow) pages.setCustomValidity(`Cannot exceed ${pages.max} pages.`);
+            else if (pages.validity.rangeUnderflow) pages.setCustomValidity(`Cannot be less than ${pages.min} page.`);
+            else pages.setCustomValidity("");
+        })
+
         // Add the book
-        add.addEventListener("click", (e) => {
+        add.addEventListener("click", () => {
             const title = addBookDialog.querySelector("#title");
             const author = addBookDialog.querySelector("#author");
-            const pages = addBookDialog.querySelector("#pages");
             const read = addBookDialog.querySelector("#read");
             const id = generateId();
 
-            const data = [title.value, author.value, +pages.value, read.checked, id];
-
-            // Prevent empty inputs and pages less than 1
-            if (!data.includes("") && data[2] > 0 && (data[2]%1 === 0)) {
-                e.preventDefault();
+            if (title.validity.valid && author.validity.valid && pages.validity.valid) {
+                const data = [title.value, author.value, +pages.value, read.checked, id];
                 addBookToLibrary(data);
                 addCard(data, libraryDiv, lastCard);
                 clearInputs();
